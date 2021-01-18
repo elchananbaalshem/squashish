@@ -1,0 +1,161 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --color: rgb(19, 0, 165);
+}
+
+body {
+    background-color: var(--color);
+    justify-content : center;
+    display         : flex;
+}
+
+body,
+button {
+    font-family: 'Courier New', Courier, monospace;
+
+}
+
+video {
+    display: none;
+}
+
+canvas {
+    position : absolute;
+    top      : 50%;
+    left     : 50%;
+    transform: translate(-50%, -50%);
+}
+
+h2,
+h1 {
+    color     : #ffffff;
+    text-align: center;
+}
+
+#restart-button-wraper {
+    display       : flex;
+    flex-direction: column;
+    align-items   : center;
+
+    position  : absolute;
+    top       : 50%;
+    left      : 50%;
+    
+    width: 8em;
+    
+    z-index   : 100;
+
+    transition: transform 0.5s;
+    transform : translate(-50%, -50%) scale(1, 1);
+}
+
+label[for='enter-name-input'] {
+    color: #fff;
+    width: 100%;
+    text-align: center;
+}
+
+#enter-name-input {
+    font-size: 1.2rem;
+    
+    padding    : 0.5em 1em;
+    
+    width      : 100%;
+    
+    text-align : start;
+    font-family: monospace;
+    color: #555;
+    border     : none;
+    outline    : none;
+    
+}
+
+
+#restart-button {
+    background-color: var(--color);
+
+    color    : #ffffff;
+    font-size: 1.3rem;
+
+
+    border : none;
+    padding: 1em;
+    margin : auto;
+
+    opacity   : 0.9;
+    transition: opacity 0.1s;
+
+    width: 100%;
+}
+
+#restart-button:hover {
+    cursor   : pointer;
+    opacity  : 0.7;
+    transform: scale(1.2, 1.2);
+}
+
+label[for="auto-restart-checkbox"] {
+    text-align : center;
+    align-self : center;
+    margin-left: 1rem;
+
+    padding      : 0.3em;
+    max-width    : 5em;
+    overflow-wrap: break-word;
+
+    color           : #fff;
+    background-color: #0000008c;
+
+    transition: 0.5s;
+
+    display: none;
+}
+
+#auto-restart-checkbox {
+    display: none;
+}
+
+#auto-restart-checkbox:checked+label {
+    background-color: rgb(7, 231, 7);
+}
+
+#auto-restart-checkbox+label::after {
+    content   : '✔';
+    color     : #333;
+    position  : absolute;
+    left      : 50%;
+    transform : scale(0);
+    z-index   : 1;
+    opacity   : 0.2;
+    transition: all 0.3s;
+}
+
+#auto-restart-checkbox:checked+label::after {
+    transform: scale(7);
+}
+
+#highscores {
+    position: absolute;
+    left    : 80%;
+    top     : 10vh;
+    width   : 15rem;
+}
+
+#highscores ul,
+ol {
+    width  : 100%;
+    padding: 0;
+    margin : 0;
+}
+
+#highscores li {
+    display        : flex;
+    justify-content: space-between;
+    color: #fff;
+}
+#highscores > ul:first-of-type li {
+    background-color: rgba(128, 128, 128, 0.452);
+}
