@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack serve --open chrome",
     "build": "webpack --config webpack.prod.js",
-    "start": "cd dist && http-serve"
+    "start": "cd dist && http-server"
   },
   "keywords": [],
   "author": "",
