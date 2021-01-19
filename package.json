@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "start": "webpack serve --open chrome",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "web":  "cd dist && http-server"
   },
   "keywords": [],
   "author": "",
