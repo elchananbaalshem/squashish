@@ -22,7 +22,7 @@ let ball, matka, walls;
 /** DOM elements */
 let video;
 let highscores, score, name;
-let restartButtonWraper, restartButton, autoRestartCheckbox, autoRestartLabel;
+let restartGroup, restartButton, autoRestartCheckbox, autoRestartLabel;
 /*************** */
 
 let paused = true;
@@ -48,13 +48,13 @@ async function loadDOMElenemts() {
     score = document.getElementById('score');
     name = document.getElementById('name');
 
-    restartButtonWraper = document.getElementById('restart-button-wraper');
+    restartGroup = document.getElementById('restart-group');
 
     restartButton = document.getElementById('restart-button');
     restartButton.innerText = "Start";
 
-    autoRestartCheckbox = document.getElementById("auto-restart-checkbox")
-    autoRestartLabel = document.querySelector("label[for='auto-restart-checkbox']")
+    autoRestartCheckbox = document.getElementById("auto-restart-checkbox");
+    autoRestartLabel = document.querySelector("label[for='auto-restart-checkbox']");
 }
 
 async function startTracking() {
@@ -158,7 +158,7 @@ function createWalls() {
     lowerWall = new THREE.Mesh(fourWallsGeometry, material);
 
     lowerWall.lookAt(0, 1, 0);
-    lowerWall.rotateZ(Math.PI / 2)
+    lowerWall.rotateZ(Math.PI / 2);
 
     lowerWall.position.y = -10;
     lowerWall.position.z = 20;
@@ -212,7 +212,7 @@ function createBall() {
     direction.z = -1;
     ball.direction = direction;
 
-    scene.add(ball)
+    scene.add(ball);
     return ball;
 }
 
@@ -246,7 +246,7 @@ async function initGameControl() {
     onHandMoveEvent = new CustomEvent('handmove');
     window.addEventListener('handmove', onHandMove);
 
-    document.addEventListener('keypress', e => {
+    document.addEventListener('keydown', e => {
         if (e.key === "Esc" || e.key === "Escape") {
             paused = !paused;
             console.log(e)
@@ -254,8 +254,8 @@ async function initGameControl() {
     });
 
     restartButton.addEventListener('click', () => {
-        restartButton.innerText = "Try Again"
-        autoRestartLabel.style.display = "block"
+        restartButton.innerText = "Try Again";
+        autoRestartLabel.style.display = "block";
 
     }, { once: true });
     restartButton.addEventListener('click', restart);
@@ -365,17 +365,34 @@ function whenMissed() {
 
     //1. Save last game name and score 
     const lastGame = document.createElement('li');
+    const scores = {
+        el: highscores.querySelector('.scores'),
+        arr: Array.from(highscores.querySelector('.scores').children)
+    }
+
     lastGame.innerHTML = `
-    <span>${name.innerText}</span><span>${score.innerText}</span>
+    <span>${name.innerText}</span><span class="points">${score.innerText}</class=span>
     `
-    highscores.querySelector('.scores').appendChild(lastGame)
+
+    scores.arr.push(lastGame);
+    scores.arr.sort((x, y) => {
+        return (
+            Number(x.querySelector('.points').innerText) - Number(y.querySelector('.points').innerText)
+        )
+    });
+
+    scores.el.innerHTML = '';
+    for (let i = 0; i < scores.arr.length; i++) {
+        scores.el.appendChild(scores.arr[scores.arr.length - 1 - i]);
+    }
+
 
     //2. restart, or show restart button
     if (autoRestartCheckbox.checked) {
         restart();
     } else {
         paused = true;
-        restartButtonWraper.style.display = "flex";
+        restartGroup.style.display = "flex";
     }
 
 }
@@ -383,7 +400,7 @@ function whenMissed() {
 function restart() {
     score.innerText = "0";
     name.innerText = document.getElementById('enter-name-input').value;
-    restartButtonWraper.style.display = "none";
+    restartGroup.style.display = "none";
 
 
     ball.position.x = 0;
