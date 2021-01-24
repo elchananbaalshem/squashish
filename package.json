@@ -10,7 +10,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "handtrackjs": "0.0.13",
     "http-server": "^0.12.3",
